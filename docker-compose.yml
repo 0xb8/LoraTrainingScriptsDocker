@@ -1,0 +1,15 @@
+version: "3"
+services:
+  app:
+    runtime: nvidia
+    ipc: host
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    build: .
+    volumes:
+      - type: bind
+        source: .
+        target: /sd
+      - type: bind
+        source: ./cache
+        target: /root/.cache
