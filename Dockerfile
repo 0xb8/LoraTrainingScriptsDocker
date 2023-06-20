@@ -4,12 +4,13 @@ RUN python3 -m pip install torch torchvision nvidia-tensorrt==8.4.1.5 --extra-in
 RUN python3 -m pip install --pre -U xformers triton
 
 WORKDIR /root/
-RUN git clone --filter=blob:none --recurse-submodules https://github.com/derrian-distro/LoRA_Easy_Training_Scripts
+RUN git clone --recurse-submodules -b old-scripts https://github.com/derrian-distro/LoRA_Easy_Training_Scripts
 
 COPY requirements.txt /root/LoRA_Easy_Training_Scripts/sd_scripts/requirements.txt
 WORKDIR /root/LoRA_Easy_Training_Scripts/sd_scripts/
 RUN python3 -m pip install -r requirements.txt
-RUN python3 -m pip install lion-pytorch dadaptation lycoris_lora
+RUN python3 -m pip install ../LyCORIS/.
+RUN python3 -m pip install lion-pytorch dadaptation
 
 # fix libcudart.so not being found by bitsandbytes 
 RUN ln -s /usr/local/cuda/lib64/libcudart.so.11.0 /usr/local/lib/python3.10/dist-packages/nvidia/cuda_runtime/lib/libcudart.so
